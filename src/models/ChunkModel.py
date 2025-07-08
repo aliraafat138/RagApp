@@ -1,4 +1,4 @@
-from BaseDataModel import BaseDataModel
+from .BaseDataModel import BaseDataModel
 from .db_schemes.chunk import DataChunk
 from .enums.DataBaseEnums import DataBaseEnums
 from bson.objectid import ObjectId
