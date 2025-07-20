@@ -21,3 +21,8 @@ class DataChunk(BaseModel):
             "name":"chunk_project_id_index_1",
                 "unique":False
         }]
+    
+
+class RetrievedData(BaseModel):
+    text:str
+    score:float
