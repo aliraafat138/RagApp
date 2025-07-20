@@ -1,5 +1,5 @@
 from openai import OpenAI
-from stores.llm.llmInterface import LLMInterface
+from ..llmInterface import LLMInterface
 from ..llmEnums import OpenAIEnums
 import logging
 
@@ -26,6 +26,7 @@ class OpenAIProvider(LLMInterface):
         )
 
         self.logger= logging.getLogger(__name__)
+        self.enums=OpenAIEnums
 
     def generation_model(self,model_id:str):
         self.generation_model_id=model_id
