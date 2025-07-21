@@ -1,5 +1,5 @@
 from stores.llm.providers import OpenAIProvider,CoHereProvider
-from .llmEnums import LLMEnums
+from stores.llm.llmEnums import LLMEnums
 
 class LLMProviderFactory:
     def __init__(self,config):
