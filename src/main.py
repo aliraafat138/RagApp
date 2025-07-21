@@ -4,6 +4,7 @@ from helpers.config import get_settings
 from motor.motor_asyncio import  AsyncIOMotorClient
 from stores.vectordb.VectorDBFactory import VectorDBFactory
 from stores.llm.llmProviderFactory import LLMProviderFactory
+from stores.llm.templates.template_parser import TemplateParser
 
 app=FastAPI()
 
@@ -23,7 +24,10 @@ async def start_db_client():
                                         embedding_size=settings.EMBEDDING_SIZE)
     app.vectordb_client=vectorDB_provider_factory.create(provider=settings.VECTOR_DB_BACKEND)
     app.vectordb_client.connect()
-
+    app.template_parser=TemplateParser(
+        language=settings.PRIMARY_LANG,
+        default_language=settings.DEFAULT_LANG
+    )
 
 
 @app.on_event("shutdown")
