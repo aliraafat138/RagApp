@@ -9,7 +9,7 @@ class QdrantDBProvider(VectorDBInterface):
         self.client=None
         self.db_path=db_path
         if distance_method ==DistanceMethodEnums.COSINE.value:
-            self.distance_method=DistanceMethodEnums.COSINE.value
+            self.distance_method=models.Distance.COSINE
 
         elif distance_method==DistanceMethodEnums.DOT.value:
             self.distance_method=models.Distance.DOT
@@ -67,7 +67,7 @@ class QdrantDBProvider(VectorDBInterface):
             return False
         return True
     
-    def insert_many(self,collection_name:str,text:list,metadata:list,vector:list,records_id:list=None,batch_size:int=50):
+    def insert_many(self,collection_name:str,texts:list,metadata:list,vector:list,records_id:list=None,batch_size:int=50):
 
         if metadata is None:
             metadata=[None] *len(text)
@@ -75,10 +75,10 @@ class QdrantDBProvider(VectorDBInterface):
         if records_id is None:
             records_id=[None ] *len(text)
 
-        for i in range(0,text,batch_size):
+        for i in range(0,len(texts),batch_size):
             batch_end=i+batch_size
 
-            batch_text=text[i:batch_end]
+            batch_text=texts[i:batch_end]
             batch_vector=vector[i:batch_end]
             batch_metadata=metadata[i:batch_end]
             batch_record_ids=records_id[i:batch_end]

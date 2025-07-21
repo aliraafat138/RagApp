@@ -4,8 +4,7 @@ from routes.schemes.nlp import pushRequest,searchRequest
 from models.ProjectModel import ProjectModel
 from models.ChunkModel import ChunkModel
 from models.enums.ResponseEnums import ResponseSignals 
-from controllers import NlpController
-from models.db_schemes import RetrievedData
+from controllers import NLPController
 import logging
 from helpers.config import get_settings
 settings=get_settings()
@@ -28,11 +27,11 @@ async def index_project(request:Request,project_id:str,push_request:pushRequest)
                 "signal":ResponseSignals.PROJECT_NOT_FOUND_ERROR.value
             }
         )
-    nlp_controller =NlpController(
+    nlp_controller =NLPController(
         vectordb_client=request.app.vectordb_client,
         embedding_client=request.app.embedding_client,
         generation_client=request.app.generate_client,
-         template_parser=request.app.template_parser
+        template_parser=request.app.template_parser
     )
 
     has_records = True
@@ -83,7 +82,7 @@ async def get_project_index_info(request:Request,project_id:str):
     project_model=await ProjectModel.create_instance(db_client=request.app.db_client)
     project=await project_model.get_project_or_create_one(project_id=project_id)
 
-    nlp_controller =NlpController(
+    nlp_controller =NLPController(
         vectordb_client=request.app.vectordb_client,
         embedding_client=request.app.embedding_client,
         generation_client=request.app.generate_client,
@@ -101,7 +100,7 @@ async def get_project_index_info(request:Request,project_id:str):
 async def search_project_index(request:Request,project_id:str,search_request:searchRequest):
     project_model=await ProjectModel.create_instance(db_client=request.app.db_client)
     project=await project_model.get_project_or_create_one(project_id=project_id)
-    nlp_controller =NlpController(
+    nlp_controller =NLPController(
         vectordb_client=request.app.vectordb_client,
         embedding_client=request.app.embedding_client,
         generation_client=request.app.generate_client,
@@ -136,7 +135,7 @@ async def answer_rag(request: Request, project_id: str, search_request: searchRe
     project = await project_model.get_project_or_create_one(project_id=project_id)
 
 
-    nlp_controller = NlpController(
+    nlp_controller = NLPController(
         generation_client=request.app.generate_client,
         embedding_client=request.app.embedding_client,
         vectordb_client=request.app.vectordb_client,
